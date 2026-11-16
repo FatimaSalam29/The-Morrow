@@ -142,3 +142,34 @@ export const refreshWire = createServerFn({ method: "POST" })
     );
     return res;
   });
+
+/** Fetch article images server-side so the PDF can embed them (avoids browser CORS). */
+export const fetchImagesForPdf = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z.object({ urls: z.array(z.string().url()).max(8) }).parse(input),
+  )
+  .handler(async ({ data }) => {
+    const out: Record<string, { dataUrl: string; format: "JPEG" | "PNG" }> = {};
+    await Promise.all(
+      data.urls.map(async (url) => {
+        try {
+          const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+          if (!res.ok) return;
+          const type = res.headers.get("content-type") ?? "";
+          const format = type.includes("png") ? "PNG" : type.includes("jpeg") || type.includes("jpg") ? "JPEG" : null;
+          if (!format) return;
+          const buf = new Uint8Array(await res.arrayBuffer());
+          if (buf.byteLength > 2_500_000) return;
+          let bin = "";
+          for (let i = 0; i < buf.length; i += 0x8000) {
+            bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+          }
+          out[url] = { dataUrl: `data:${format === "PNG" ? "image/png" : "image/jpeg"};base64,${btoa(bin)}`, format };
+        } catch {
+          // Skip images we can't fetch; the PDF still prints without them.
+        }
+      }),
+    );
+    return out;
+  });
