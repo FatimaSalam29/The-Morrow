@@ -1,0 +1,11 @@
+# Personal Morning Paper — Roadmap
+- [ ] Database: profiles/preferences, articles cache, editions, interactions
+- [ ] Auth (email/password + Google) and onboarding flow
+- [ ] RSS news fetching from real sources + AI summaries
+- [ ] Recommendation engine using interests + reading signals (with tests)
+- [ ] Daily edition generation + newspaper reading page
+- [ ] PDF download of the edition
+- [ ] Dashboard, archive of past editions, explore (search + filters), saved
+- [ ] Settings (edit preferences)
+- [ ] README + .env.example
+- [ ] GitHub: user must connect via Project settings → Git (agent cannot create repo)
