@@ -17,7 +17,7 @@ export function ArticleReader({
   ix,
 }: {
   article: Article;
-  reason?: string | null;
+  reason?: string | null | undefined;
   open: boolean;
   onOpenChange: (o: boolean) => void;
   ix: Ix;

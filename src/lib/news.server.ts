@@ -120,7 +120,7 @@ export async function summarise(
         {
           role: "user",
           content: `Edition date: ${dateLabel}. Reader: ${readerName ?? "the reader"}.
-For every article with needs_summary=true, write a summary of ${STYLE_GUIDE[style] ?? STYLE_GUIDE.balanced}.
+For every article with needs_summary=true, write a summary of ${STYLE_GUIDE[style] ?? STYLE_GUIDE["balanced"]}.
 Then write "note": a warm 2-3 sentence editor's note for the top of today's paper that names a few of the actual headlines below. No facts beyond the articles.
 Articles JSON:
 ${JSON.stringify(payload)}`,

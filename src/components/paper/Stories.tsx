@@ -29,7 +29,7 @@ function Img({ src, alt, className }: { src: string | null; alt: string; classNa
   );
 }
 
-function Meta({ a, reason }: { a: Article; reason?: string | null }) {
+function Meta({ a, reason }: { a: Article; reason?: string | null | undefined }) {
   return (
     <div className="byline flex flex-wrap items-center gap-x-2 gap-y-1">
       <span className="font-semibold text-ink">{a.source}</span>
@@ -56,7 +56,7 @@ function Skipped({ a, ix }: { a: Article; ix: Ix }) {
   );
 }
 
-export function LeadStory({ a, reason, ix }: { a: Article; reason?: string | null; ix: Ix }) {
+export function LeadStory({ a, reason, ix }: { a: Article; reason?: string | null | undefined; ix: Ix }) {
   const [open, setOpen] = useState(false);
   if (ix.has(a.id, "skip")) return <Skipped a={a} ix={ix} />;
   return (
@@ -84,7 +84,7 @@ export function LeadStory({ a, reason, ix }: { a: Article; reason?: string | nul
   );
 }
 
-export function FrontStory({ a, reason, ix, withImage = true }: { a: Article; reason?: string | null; ix: Ix; withImage?: boolean }) {
+export function FrontStory({ a, reason, ix, withImage = true }: { a: Article; reason?: string | null | undefined; ix: Ix; withImage?: boolean }) {
   const [open, setOpen] = useState(false);
   if (ix.has(a.id, "skip")) return <Skipped a={a} ix={ix} />;
   return (
@@ -112,7 +112,7 @@ export function FrontStory({ a, reason, ix, withImage = true }: { a: Article; re
   );
 }
 
-export function BriefStory({ a, reason, ix }: { a: Article; reason?: string | null; ix: Ix }) {
+export function BriefStory({ a, reason, ix }: { a: Article; reason?: string | null | undefined; ix: Ix }) {
   const [open, setOpen] = useState(false);
   if (ix.has(a.id, "skip")) return <Skipped a={a} ix={ix} />;
   return (
