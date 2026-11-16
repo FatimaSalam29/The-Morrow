@@ -184,7 +184,7 @@ export function selectEdition<T extends Candidate>(
   const leadIdx = picked.findIndex((p) => p.article.image_url);
   if (leadIdx > 0) {
     const [lead] = picked.splice(leadIdx, 1);
-    picked.unshift(lead);
+    if (lead) picked.unshift(lead);
   }
   return picked;
 }
@@ -201,6 +201,7 @@ export function categoriesToFetch(
     .map(([k]) => k);
   const set = new Set([...profile.topics, ...learned]);
   const others = allTopics.filter((t) => !set.has(t));
-  if (others.length) set.add(others[Math.abs(daySeed) % others.length]);
+  const extra = others[Math.abs(daySeed) % Math.max(1, others.length)];
+  if (extra) set.add(extra);
   return [...set].filter((t) => allTopics.includes(t));
 }

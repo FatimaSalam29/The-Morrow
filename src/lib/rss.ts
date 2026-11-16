@@ -67,7 +67,7 @@ function pickImage(item: Record<string, unknown>, html: string): string | null {
     attr(item["media:thumbnail"], "url"),
     attr((item["media:group"] as Record<string, unknown> | undefined)?.["media:content"], "url"),
     (() => {
-      const enc = item.enclosure;
+      const enc = item["enclosure"];
       const type = attr(enc, "type");
       return !type || type.startsWith("image") ? attr(enc, "url") : null;
     })(),
@@ -78,14 +78,14 @@ function pickImage(item: Record<string, unknown>, html: string): string | null {
 }
 
 function linkOf(item: Record<string, unknown>): string {
-  const link = item.link;
+  const link = item["link"];
   if (typeof link === "string") return link.trim();
   if (Array.isArray(link)) {
     const alt = link.find((l) => attr(l, "rel") === "alternate") ?? link[0];
     return (attr(alt, "href") ?? text(alt)).trim();
   }
   if (link && typeof link === "object") return (attr(link, "href") ?? text(link)).trim();
-  const guid = text(item.guid);
+  const guid = text(item["guid"]);
   return guid.startsWith("http") ? guid : "";
 }
 
@@ -97,17 +97,17 @@ export function parseFeed(xml: string): ParsedItem[] {
   } catch {
     return [];
   }
-  const raw = doc?.rss?.channel?.item ?? doc?.feed?.entry ?? doc?.["rdf:RDF"]?.item ?? [];
+  const raw = doc?.["rss"]?.channel?.item ?? doc?.["feed"]?.entry ?? doc?.["rdf:RDF"]?.item ?? [];
   const items: Record<string, unknown>[] = Array.isArray(raw) ? raw : [raw];
   const out: ParsedItem[] = [];
   for (const item of items) {
     if (!item || typeof item !== "object") continue;
     const url = linkOf(item);
-    const title = stripHtml(text(item.title));
+    const title = stripHtml(text(item["title"]));
     if (!url || !/^https?:\/\//.test(url) || !title) continue;
-    const html = text(item["content:encoded"]) || text(item.description) || text(item.summary) || text(item.content);
+    const html = text(item["content:encoded"]) || text(item["description"]) || text(item["summary"]) || text(item["content"]);
     const description = stripHtml(html).slice(0, 600) || null;
-    const dateRaw = text(item.pubDate) || text(item.published) || text(item.updated) || text(item["dc:date"]);
+    const dateRaw = text(item["pubDate"]) || text(item["published"]) || text(item["updated"]) || text(item["dc:date"]);
     const d = dateRaw ? new Date(dateRaw) : null;
     out.push({
       url,

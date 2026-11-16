@@ -60,7 +60,10 @@ function Settings() {
       .update({ display_name: name.trim() || null, topics, keywords, blocked_sources: blocked, summary_style: style, edition_size: size })
       .eq("id", profile.id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     qc.invalidateQueries({ queryKey: ["profile"] });
     toast.success("Preferences saved. Tomorrow's paper will reflect them — or reprint today's.");
   }
@@ -68,7 +71,10 @@ function Settings() {
   async function resetLearning() {
     if (!profile) return;
     const { error } = await supabase.from("article_interactions").delete().eq("user_id", profile.id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     qc.invalidateQueries({ queryKey: ["interactions"] });
     qc.invalidateQueries({ queryKey: ["saved"] });
     toast.success("Reading history cleared.");
