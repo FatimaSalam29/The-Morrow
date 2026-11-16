@@ -175,10 +175,8 @@ export function selectEdition<T extends Candidate>(
     take(best);
   }
   if (discovery && picked.length < opts.size && pool.includes(discovery)) {
-    take({ ...discovery, reason: "A fresh discovery outside your usual sections" } as Scored<T>);
-    // splice above used the copy; remove original reference too
-    const i = pool.indexOf(discovery);
-    if (i >= 0) pool.splice(i, 1);
+    discovery.reason = "A fresh discovery outside your usual sections";
+    take(discovery);
   }
 
   // Lead story = highest score with an image if possible.

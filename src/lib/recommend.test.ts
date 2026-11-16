@@ -61,3 +61,11 @@ describe("recommendation rules", () => {
     expect(selectEdition(cands, profile, [], { size: 12, now })).toHaveLength(12);
   });
 });
+
+describe("discovery slot", () => {
+  it("keeps one story from outside followed sections", () => {
+    const cands = [...Array.from({ length: 10 }, (_, i) => mk(`t${i}`, "technology")), mk("x", "food")];
+    const out = selectEdition(cands, profile, [], { size: 5, now });
+    expect(out.filter((o) => o.article.category === "food")).toHaveLength(1);
+  });
+});
