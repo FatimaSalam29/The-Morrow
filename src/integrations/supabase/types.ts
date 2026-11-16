@@ -14,7 +14,200 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      article_interactions: {
+        Row: {
+          action: string
+          article_id: string
+          category: string | null
+          created_at: string
+          id: string
+          source: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          article_id: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          source?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          article_id?: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          source?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_interactions_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      articles: {
+        Row: {
+          ai_summary: string | null
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          published_at: string | null
+          source: string
+          title: string
+          url: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          source: string
+          title: string
+          url: string
+        }
+        Update: {
+          ai_summary?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          published_at?: string | null
+          source?: string
+          title?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      edition_articles: {
+        Row: {
+          article_id: string
+          edition_id: string
+          id: string
+          position: number
+          reason: string | null
+          score: number
+          section: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          edition_id: string
+          id?: string
+          position: number
+          reason?: string | null
+          score?: number
+          section: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          edition_id?: string
+          id?: string
+          position?: number
+          reason?: string | null
+          score?: number
+          section?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "edition_articles_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "edition_articles_edition_id_fkey"
+            columns: ["edition_id"]
+            isOneToOne: false
+            referencedRelation: "editions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      editions: {
+        Row: {
+          created_at: string
+          edition_date: string
+          edition_number: number
+          headline_note: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          edition_date: string
+          edition_number?: number
+          headline_note?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          edition_date?: string
+          edition_number?: number
+          headline_note?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          blocked_sources: string[]
+          created_at: string
+          display_name: string | null
+          edition_size: number
+          id: string
+          keywords: string[]
+          onboarded: boolean
+          reading_minutes: number
+          summary_style: string
+          topics: string[]
+          updated_at: string
+        }
+        Insert: {
+          blocked_sources?: string[]
+          created_at?: string
+          display_name?: string | null
+          edition_size?: number
+          id: string
+          keywords?: string[]
+          onboarded?: boolean
+          reading_minutes?: number
+          summary_style?: string
+          topics?: string[]
+          updated_at?: string
+        }
+        Update: {
+          blocked_sources?: string[]
+          created_at?: string
+          display_name?: string | null
+          edition_size?: number
+          id?: string
+          keywords?: string[]
+          onboarded?: boolean
+          reading_minutes?: number
+          summary_style?: string
+          topics?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
