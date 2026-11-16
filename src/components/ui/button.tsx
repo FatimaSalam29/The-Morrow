@@ -20,6 +20,8 @@ const buttonVariants = cva(
           "bg-editorial text-editorial-foreground shadow-sm hover:bg-editorial/90 font-semibold tracking-wide",
         paper:
           "border border-ink bg-transparent text-ink hover:bg-ink hover:text-paper font-semibold tracking-wide",
+        google:
+          "bg-google text-google-foreground border border-google-border hover:bg-google/90 font-medium",
         quiet: "text-muted-foreground hover:text-ink hover:bg-paper-deep",
       },
       size: {

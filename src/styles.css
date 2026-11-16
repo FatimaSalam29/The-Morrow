@@ -67,6 +67,9 @@
   --color-editorial: var(--editorial);
   --color-editorial-foreground: var(--editorial-foreground);
   --color-rule: var(--rule);
+  --color-google: var(--google-bg);
+  --color-google-border: var(--google-border);
+  --color-google-foreground: var(--google-fg);
 }
 
 :root {
@@ -79,6 +82,10 @@
   --editorial: oklch(0.48 0.175 27);
   --editorial-foreground: oklch(0.98 0.01 85);
   --rule: oklch(0.8 0.02 80);
+  /* Google sign-in brand theme (light): #FFFFFF / #747775 / #1F1F1F */
+  --google-bg: oklch(1 0 0);
+  --google-border: oklch(0.5605 0.0039 145.5);
+  --google-fg: oklch(0.2393 0 0);
 
   --background: var(--paper);
   --foreground: var(--ink);
