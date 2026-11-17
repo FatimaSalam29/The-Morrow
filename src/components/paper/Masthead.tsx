@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export function Masthead({
-  title = "The Morning Paper",
+  title = "The Morrow",
   dateLine,
   left,
   right,

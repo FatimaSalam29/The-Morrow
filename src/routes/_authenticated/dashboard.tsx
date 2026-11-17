@@ -13,9 +13,9 @@ import { formatEditionDate, localISODate } from "@/lib/dates";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Your desk — The Morning Paper" },
+      { title: "Your desk — The Morrow" },
       { name: "description", content: "Your reading stats, learned interests and recent editions." },
-      { property: "og:title", content: "Your desk — The Morning Paper" },
+      { property: "og:title", content: "Your desk — The Morrow" },
       { property: "og:description", content: "Your reading stats, learned interests and recent editions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -61,7 +61,7 @@ function Dashboard() {
       <section className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
         <Link to="/today" className="group paper-sheet block p-6 sm:p-8">
           <p className="byline">Today's edition</p>
-          <h2 className="masthead mt-3 text-4xl sm:text-6xl">The Morning Paper</h2>
+          <h2 className="masthead mt-3 text-4xl sm:text-6xl">The Morrow</h2>
           <div className="rule-double mt-3" />
           <p className="prose-news mt-4 text-lg text-ink-soft">
             {hasToday

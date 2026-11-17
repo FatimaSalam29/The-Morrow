@@ -25,9 +25,9 @@ export const Route = createFileRoute("/_authenticated/explore")({
   validateSearch: search,
   head: () => ({
     meta: [
-      { title: "Explore the wire — The Morning Paper" },
+      { title: "Explore the wire — The Morrow" },
       { name: "description", content: "Search every story on the wire by keyword, section and newsroom." },
-      { property: "og:title", content: "Explore the wire — The Morning Paper" },
+      { property: "og:title", content: "Explore the wire — The Morrow" },
       { property: "og:description", content: "Search every story on the wire by keyword, section and newsroom." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

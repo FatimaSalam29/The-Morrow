@@ -16,10 +16,10 @@ export const Route = createFileRoute("/auth")({
   validateSearch: search,
   head: () => ({
     meta: [
-      { title: "Sign in — The Morning Paper" },
-      { name: "description", content: "Sign in or subscribe to your personal morning paper." },
-      { property: "og:title", content: "Sign in — The Morning Paper" },
-      { property: "og:description", content: "Sign in or subscribe to your personal morning paper." },
+      { title: "Sign in — The Morrow" },
+      { name: "description", content: "Sign in or subscribe to The Morrow, your personal morning paper." },
+      { property: "og:title", content: "Sign in — The Morrow" },
+      { property: "og:description", content: "Sign in or subscribe to The Morrow, your personal morning paper." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

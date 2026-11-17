@@ -9,9 +9,9 @@ import { useInteractions } from "@/hooks/use-interactions";
 export const Route = createFileRoute("/_authenticated/saved")({
   head: () => ({
     meta: [
-      { title: "Saved clippings — The Morning Paper" },
+      { title: "Saved clippings — The Morrow" },
       { name: "description", content: "Stories you've clipped to read again." },
-      { property: "og:title", content: "Saved clippings — The Morning Paper" },
+      { property: "og:title", content: "Saved clippings — The Morrow" },
       { property: "og:description", content: "Stories you've clipped to read again." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -18,7 +18,7 @@ export interface ArticleRow {
   ai_summary: string | null;
 }
 
-const UA = "Mozilla/5.0 (compatible; PersonalMorningPaper/1.0; +https://lovable.app)";
+const UA = "Mozilla/5.0 (compatible; TheMorrow/1.0)";
 
 async function fetchFeed(url: string): Promise<string | null> {
   try {

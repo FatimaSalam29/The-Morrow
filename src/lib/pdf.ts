@@ -45,7 +45,7 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     doc.setTextColor(...grey);
-    doc.text(clean(`The Morning Paper  |  ${formatEditionDate(input.date)}  |  Page ${page}`), W / 2, H - 18, { align: "center" });
+    doc.text(clean(`The Morrow  |  ${formatEditionDate(input.date)}  |  Page ${page}`), W / 2, H - 18, { align: "center" });
   };
 
   const masthead = () => {
@@ -60,7 +60,7 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
     doc.line(M, M + 12, W - M, M + 12);
     doc.setFont("times", "bold");
     doc.setFontSize(52);
-    doc.text("The Morning Paper", W / 2, M + 62, { align: "center" });
+    doc.text("The Morrow", W / 2, M + 62, { align: "center" });
     doc.setLineWidth(0.6);
     doc.line(M, M + 76, W - M, M + 76);
     doc.line(M, M + 79, W - M, M + 79);
@@ -77,7 +77,7 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
     doc.setTextColor(...ink);
     doc.setFont("times", "bold");
     doc.setFontSize(16);
-    doc.text("The Morning Paper", M, M + 8);
+    doc.text("The Morrow", M, M + 8);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7.5);
     doc.text(clean(formatEditionDate(input.date).toUpperCase()), W - M, M + 8, { align: "right" });

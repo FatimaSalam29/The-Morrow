@@ -17,9 +17,9 @@ import { useInteractions } from "@/hooks/use-interactions";
 export const Route = createFileRoute("/_authenticated/paper/$date")({
   head: ({ params }) => ({
     meta: [
-      { title: `Your paper for ${params.date} — The Morning Paper` },
+      { title: `Your paper for ${params.date} — The Morrow` },
       { name: "description", content: "Your personalised daily edition." },
-      { property: "og:title", content: "Your daily edition — The Morning Paper" },
+      { property: "og:title", content: "Your daily edition — The Morrow" },
       { property: "og:description", content: "Your personalised daily edition." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
@@ -102,7 +102,7 @@ function PaperPage() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `morning-paper-${date}.pdf`;
+      a.download = `the-morrow-${date}.pdf`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
     } catch (e) {

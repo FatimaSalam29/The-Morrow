@@ -1,11 +1,12 @@
-# Personal Morning Paper — Roadmap
-- [ ] Database: profiles/preferences, articles cache, editions, interactions
-- [ ] Auth (email/password + Google) and onboarding flow
-- [ ] RSS news fetching from real sources + AI summaries
-- [ ] Recommendation engine using interests + reading signals (with tests)
-- [ ] Daily edition generation + newspaper reading page
-- [ ] PDF download of the edition
-- [ ] Dashboard, archive of past editions, explore (search + filters), saved
-- [ ] Settings (edit preferences)
+# The Morrow — Roadmap
+- [x] Database: profiles/preferences, articles cache, editions, interactions
+- [x] Auth (email/password + Google) and onboarding flow
+- [x] RSS news fetching from real sources + AI summaries
+- [x] Recommendation engine using interests + reading signals (with tests)
+- [x] Daily edition generation + newspaper reading page
+- [x] PDF download of the edition
+- [x] Dashboard, archive, explore, saved, settings
+- [ ] Rename to "The Morrow" everywhere; remove Lovable mentions from site
+- [ ] Landing page at /
 - [ ] README + .env.example
-- [ ] GitHub: user must connect via Project settings → Git (agent cannot create repo)
+- [ ] End-to-end test: sign up → onboarding → paper → PDF → interactions; mobile/tablet layout

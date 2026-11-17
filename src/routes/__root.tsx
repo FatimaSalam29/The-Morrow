@@ -83,13 +83,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Morning Paper — your personal daily edition" },
+      { title: "The Morrow — your personal daily edition" },
       {
         name: "description",
         content:
           "A personal morning newspaper built from real reporting, summarised by AI and tuned to what you actually read.",
       },
-      { property: "og:title", content: "The Morning Paper" },
+      { property: "og:title", content: "The Morrow" },
       {
         property: "og:description",
         content: "Your personal daily newspaper, from real sources, every morning.",

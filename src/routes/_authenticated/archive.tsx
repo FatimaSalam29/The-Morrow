@@ -9,9 +9,9 @@ import { formatEditionDate } from "@/lib/dates";
 export const Route = createFileRoute("/_authenticated/archive")({
   head: () => ({
     meta: [
-      { title: "The archive — The Morning Paper" },
+      { title: "The archive — The Morrow" },
       { name: "description", content: "Every edition of your personal paper, kept as it was printed." },
-      { property: "og:title", content: "The archive — The Morning Paper" },
+      { property: "og:title", content: "The archive — The Morrow" },
       { property: "og:description", content: "Every edition of your personal paper, kept as it was printed." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -68,7 +68,7 @@ function Archive() {
               >
                 <p className="byline flex justify-between"><span>No. {e.edition_number}</span><span>{e.edition_articles?.[0]?.count ?? 0} stories</span></p>
                 <div className="rule-thin mt-2" />
-                <p className="masthead mt-3 text-center text-2xl">The Morning Paper</p>
+                <p className="masthead mt-3 text-center text-2xl">The Morrow</p>
                 <div className="rule-double mt-2" />
                 <p className="mt-3 text-center font-serif">{formatEditionDate(e.edition_date)}</p>
                 {e.headline_note && <p className="prose-news mt-3 line-clamp-3 text-sm italic text-ink-soft">{e.headline_note}</p>}
