@@ -52,7 +52,11 @@ function Onboarding() {
   async function finish() {
     setSaving(true);
     const { data: u } = await supabase.auth.getUser();
-    if (!u.user) return;
+    if (!u.user) {
+      setSaving(false);
+      toast.error("Your session has expired. Please sign in again.");
+      return;
+    }
     const { error } = await supabase
       .from("profiles")
       .upsert({
