@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Masthead } from "@/components/paper/Masthead";
 
-const search = z.object({ redirect: z.string().optional() });
+const search = z.object({ redirect: z.string().optional(), mode: z.enum(["signin", "signup"]).optional() });
 
 export const Route = createFileRoute("/auth")({
   validateSearch: search,
@@ -42,9 +42,9 @@ function GoogleG() {
 }
 
 function AuthPage() {
-  const { redirect } = Route.useSearch();
+  const { redirect, mode: initialMode } = Route.useSearch();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode ?? "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
