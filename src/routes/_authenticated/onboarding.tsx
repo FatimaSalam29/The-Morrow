@@ -13,9 +13,9 @@ import { topicLabel } from "@/lib/feeds";
 export const Route = createFileRoute("/_authenticated/onboarding")({
   head: () => ({
     meta: [
-      { title: "Set up your paper — The Morning Paper" },
+      { title: "Set up your paper — The Morrow" },
       { name: "description", content: "Tell us what you care about and we'll set your first edition." },
-      { property: "og:title", content: "Set up your paper — The Morning Paper" },
+      { property: "og:title", content: "Set up your paper — The Morrow" },
       { property: "og:description", content: "Tell us what you care about and we'll set your first edition." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -52,7 +52,11 @@ function Onboarding() {
   async function finish() {
     setSaving(true);
     const { data: u } = await supabase.auth.getUser();
-    if (!u.user) return;
+    if (!u.user) {
+      setSaving(false);
+      toast.error("Your session has expired. Please sign in again.");
+      return;
+    }
     const { error } = await supabase
       .from("profiles")
       .upsert({
@@ -149,7 +153,7 @@ function Onboarding() {
           <section className="paper-sheet mx-auto max-w-2xl p-8 text-center">
             <p className="byline">Proof for approval</p>
             <h2 className="masthead mt-3 text-4xl sm:text-5xl">
-              {name.trim() ? `The ${name.trim()} Times` : "The Morning Paper"}
+              {name.trim() ? `The ${name.trim()} Times` : "The Morrow"}
             </h2>
             <div className="rule-double mt-3" />
             <p className="byline py-2">{formatEditionDate(localISODate())} · First edition</p>

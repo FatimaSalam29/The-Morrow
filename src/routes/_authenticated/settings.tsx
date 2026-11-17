@@ -16,9 +16,9 @@ import { profileQuery } from "@/lib/queries";
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
-      { title: "Preferences — The Morning Paper" },
+      { title: "Preferences — The Morrow" },
       { name: "description", content: "Tune the sections, subjects and style of your paper." },
-      { property: "og:title", content: "Preferences — The Morning Paper" },
+      { property: "og:title", content: "Preferences — The Morrow" },
       { property: "og:description", content: "Tune the sections, subjects and style of your paper." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import "@lovable.dev/cloud-auth-js/styles.css";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
@@ -10,16 +9,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Masthead } from "@/components/paper/Masthead";
 
-const search = z.object({ redirect: z.string().optional() });
+const search = z.object({ redirect: z.string().optional(), mode: z.enum(["signin", "signup"]).optional() });
 
 export const Route = createFileRoute("/auth")({
   validateSearch: search,
   head: () => ({
     meta: [
-      { title: "Sign in — The Morning Paper" },
-      { name: "description", content: "Sign in or subscribe to your personal morning paper." },
-      { property: "og:title", content: "Sign in — The Morning Paper" },
-      { property: "og:description", content: "Sign in or subscribe to your personal morning paper." },
+      { title: "Sign in — The Morrow" },
+      { name: "description", content: "Sign in or subscribe to The Morrow, your personal morning paper." },
+      { property: "og:title", content: "Sign in — The Morrow" },
+      { property: "og:description", content: "Sign in or subscribe to The Morrow, your personal morning paper." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -43,9 +42,9 @@ function GoogleG() {
 }
 
 function AuthPage() {
-  const { redirect } = Route.useSearch();
+  const { redirect, mode: initialMode } = Route.useSearch();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup">(initialMode ?? "signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -86,7 +85,7 @@ function AuthPage() {
     }
   }
 
-  async function oauth(provider: "google" | "lovable") {
+  async function oauth(provider: "google") {
     const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
     if (result.error) {
       toast.error(result.error.message ?? "Sign-in failed");
@@ -131,9 +130,6 @@ function AuthPage() {
                   <GoogleG />
                   Continue with Google
                 </Button>
-                <button type="button" className="lovable-auth-button" onClick={() => oauth("lovable")}>
-                  Continue with Lovable
-                </button>
               </div>
               <div className="my-6 flex items-center gap-3">
                 <div className="h-px flex-1 bg-rule" />

@@ -32,7 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <nav className="sticky top-0 z-40 border-b border-ink/80 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link to="/today" className="masthead text-2xl text-ink">
-            The Morning Paper
+            The Morrow
           </Link>
           <div className="hidden items-center gap-1 md:flex">
             {NAV.map((n) => (
