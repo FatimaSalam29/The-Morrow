@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import "@lovable.dev/cloud-auth-js/styles.css";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
@@ -86,7 +85,7 @@ function AuthPage() {
     }
   }
 
-  async function oauth(provider: "google" | "lovable") {
+  async function oauth(provider: "google") {
     const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
     if (result.error) {
       toast.error(result.error.message ?? "Sign-in failed");
@@ -131,9 +130,6 @@ function AuthPage() {
                   <GoogleG />
                   Continue with Google
                 </Button>
-                <button type="button" className="lovable-auth-button" onClick={() => oauth("lovable")}>
-                  Continue with Lovable
-                </button>
               </div>
               <div className="my-6 flex items-center gap-3">
                 <div className="h-px flex-1 bg-rule" />
