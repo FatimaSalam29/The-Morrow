@@ -22,7 +22,7 @@ export function useInteractions() {
   }, [q.data]);
 
   const mutation = useMutation({
-    mutationFn: async ({ article, action, on, cleared }: { article: Article; action: Action; on: boolean; cleared?: Action[] }) => {
+    mutationFn: async ({ article, action, on, cleared }: { article: Article; action: Action; on: boolean; cleared?: Action[] | undefined }) => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) throw new Error("Please sign in again.");
       if (on) {
