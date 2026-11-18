@@ -181,7 +181,7 @@ function Landing() {
         <section className="paper-sheet mt-20 px-6 py-12 text-center sm:px-12">
           <p className="kicker">Tomorrow's paper is waiting</p>
           <h2 className="headline mx-auto mt-3 max-w-2xl text-3xl sm:text-5xl">Start reading a paper that reads you back.</h2>
-          <Button asChild variant="editorial" size="lg" className="mt-8 uppercase tracking-[0.16em]">
+          <Button asChild variant="editorial" size="lg" className="mt-8 h-auto whitespace-normal py-3 uppercase tracking-[0.1em] sm:tracking-[0.16em]">
             <Link to="/auth" search={{ mode: "signup" }}>
               Create your edition <ArrowRight />
             </Link>

@@ -13,7 +13,7 @@ function sectionFor(i: number) {
 /** Build (or rebuild) the reader's personalised paper for a given local date. */
 export const generateEdition = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) =>
+  .validator((input: unknown) =>
     z.object({ date: dateSchema, rebuild: z.boolean().optional() }).parse(input),
   )
   .handler(async ({ data, context }) => {
@@ -143,29 +143,36 @@ export const refreshWire = createServerFn({ method: "POST" })
     return res;
   });
 
-/** Fetch article images server-side so the PDF can embed them (avoids browser CORS). */
+/** Fetch article images server-side so the PDF can embed them (avoids browser CORS).
+ * Only images that belong to stories on the wire are fetched. The browser re-encodes
+ * them to JPEG before typesetting, so WebP/GIF/AVIF photos print too. */
 export const fetchImagesForPdf = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) =>
-    z.object({ urls: z.array(z.string().url()).max(8) }).parse(input),
+  .validator((input: unknown) =>
+    z.object({ urls: z.array(z.string().url()).max(16) }).parse(input),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     const out: Record<string, { dataUrl: string; format: "JPEG" | "PNG" }> = {};
+    if (data.urls.length === 0) return out;
+    const { data: known } = await context.supabase
+      .from("articles")
+      .select("image_url")
+      .in("image_url", data.urls);
+    const allowed = new Set((known ?? []).map((r) => r.image_url));
     await Promise.all(
-      data.urls.map(async (url) => {
+      data.urls.filter((u) => allowed.has(u)).map(async (url) => {
         try {
           const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
           if (!res.ok) return;
-          const type = res.headers.get("content-type") ?? "";
-          const format = type.includes("png") ? "PNG" : type.includes("jpeg") || type.includes("jpg") ? "JPEG" : null;
-          if (!format) return;
+          const mime = ((res.headers.get("content-type") ?? "").split(";")[0] ?? "").trim().toLowerCase();
+          if (!/^image\/(png|jpe?g|webp|gif|avif)$/.test(mime)) return;
           const buf = new Uint8Array(await res.arrayBuffer());
           if (buf.byteLength > 2_500_000) return;
           let bin = "";
           for (let i = 0; i < buf.length; i += 0x8000) {
             bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
           }
-          out[url] = { dataUrl: `data:${format === "PNG" ? "image/png" : "image/jpeg"};base64,${btoa(bin)}`, format };
+          out[url] = { dataUrl: `data:${mime};base64,${btoa(bin)}`, format: mime === "image/png" ? "PNG" : "JPEG" };
         } catch {
           // Skip images we can't fetch; the PDF still prints without them.
         }

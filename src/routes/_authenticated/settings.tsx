@@ -83,7 +83,7 @@ function Settings() {
   if (isLoading) return <Skeleton className="h-96" />;
 
   return (
-    <div className="animate-press-in grid gap-12">
+    <div className="animate-press-in grid grid-cols-[minmax(0,1fr)] gap-12">
       <div>
         <p className="kicker">Reader services</p>
         <h1 className="headline mt-2 text-4xl sm:text-5xl">Preferences</h1>

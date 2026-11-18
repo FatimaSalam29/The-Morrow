@@ -103,15 +103,15 @@ function Explore() {
         }}
         className="mt-6 flex items-center gap-3 border-b-2 border-ink pb-2"
       >
-        <Search className="size-5 text-ink-soft" />
+        <Search className="size-5 shrink-0 text-ink-soft" />
         <input
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Search headlines, people, places…"
           aria-label="Search stories"
-          className="h-11 flex-1 bg-transparent font-serif text-xl outline-none placeholder:text-muted-foreground/70"
+          className="h-11 min-w-0 flex-1 bg-transparent font-serif text-lg sm:text-xl outline-none placeholder:text-muted-foreground/70"
         />
-        <Button type="submit" size="sm">Search</Button>
+        <Button type="submit" size="sm" className="shrink-0">Search</Button>
       </form>
 
       <div className="mt-5 flex flex-wrap gap-2">

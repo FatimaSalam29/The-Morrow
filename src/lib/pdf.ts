@@ -24,6 +24,33 @@ function clean(s: string) {
     .replace(/[^\x09\x0A\x0D\x20-\x7E\xA0-\xFF]/g, "");
 }
 
+/** Re-encode any browser-decodable image (WebP, GIF, AVIF, PNG...) as JPEG for jsPDF. */
+export async function normaliseImages(images: Record<string, Img>): Promise<Record<string, Img>> {
+  const out: Record<string, Img> = {};
+  await Promise.all(
+    Object.entries(images).map(async ([url, img]) => {
+      try {
+        const el = new Image();
+        el.src = img.dataUrl;
+        await el.decode();
+        const scale = Math.min(1, 1000 / el.naturalWidth);
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(el.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(el.naturalHeight * scale));
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.fillStyle = "#faf6ee";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(el, 0, 0, canvas.width, canvas.height);
+        out[url] = { dataUrl: canvas.toDataURL("image/jpeg", 0.82), format: "JPEG" };
+      } catch {
+        /* skip images the browser cannot decode */
+      }
+    }),
+  );
+  return out;
+}
+
 export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
   const { jsPDF } = await import("jspdf");
   const doc = new jsPDF({ unit: "pt", format: "a4" });
@@ -126,7 +153,7 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
     if (img) {
       try {
         const props = doc.getImageProperties(img.dataUrl);
-        const ih = Math.min(240, (colW * props.height) / props.width);
+        const ih = Math.min(220, (colW * props.height) / props.width);
         doc.addImage(img.dataUrl, img.format, M, y, colW, ih, undefined, "FAST");
         y += ih + 6;
       } catch {
@@ -159,27 +186,36 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
   const cols = 3;
   const gap = 16;
   const colW = (W - 2 * M - gap * (cols - 1)) / cols;
+  const bottom = H - 40;
+  if (rest.length && bottom - y < 90) {
+    // Too little room under the lead story; start the columns on a fresh page.
+    footer();
+    doc.addPage();
+    page++;
+    y = runningHead();
+  }
   let col = 0;
   let colTop = y;
   let cy = y;
-  const bottom = H - 40;
 
   const nextColumn = () => {
     col++;
     if (col >= cols) {
+      // Page furniture changes the font; restore it so a story continues in its own type.
+      const font = doc.getFont();
+      const size = doc.getFontSize();
+      const color = doc.getTextColor();
       footer();
       doc.addPage();
       page++;
       colTop = runningHead();
       col = 0;
+      doc.setFont(font.fontName, font.fontStyle);
+      doc.setFontSize(size);
+      doc.setTextColor(color);
     }
     cy = colTop;
   };
-
-  const drawColumnRules = () => {
-    /* subtle vertical rules between columns */
-  };
-  drawColumnRules();
 
   for (const s of rest) {
     const x = M + col * (colW + gap);
@@ -200,7 +236,8 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
       }
     }
     const need = 10 + hl.length * 15 + (imgH ? imgH + 6 : 0) + 14 + body.length * 12 + 26;
-    if (cy + Math.min(need, 160) > bottom) nextColumn();
+    // Move on only from a column that already has stories; an empty one is used as-is.
+    if (cy > colTop && cy + Math.min(need, 160) > bottom) nextColumn();
     const cx = M + col * (colW + gap);
 
     doc.setFont("helvetica", "bold");
@@ -212,7 +249,7 @@ export async function buildEditionPdf(input: PdfInput): Promise<Blob> {
     doc.setFontSize(13);
     doc.setTextColor(...ink);
     for (const line of hl) {
-      if (cy > bottom) { nextColumn(); }
+      if (cy + 15 > bottom) nextColumn();
       doc.text(line, M + col * (colW + gap), cy + 9);
       cy += 15;
     }

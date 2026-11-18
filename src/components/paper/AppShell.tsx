@@ -31,21 +31,21 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen">
       <nav className="sticky top-0 z-40 border-b border-ink/80 bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/80">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-          <Link to="/today" className="masthead text-2xl text-ink">
+          <Link to="/today" className="masthead shrink-0 text-2xl text-ink">
             The Morrow
           </Link>
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center md:flex lg:gap-1">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
-                className="px-3 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ink-soft transition-colors hover:text-ink"
+                className="px-2 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-ink-soft lg:px-3 lg:text-[0.72rem] lg:tracking-[0.14em] transition-colors hover:text-ink"
                 activeProps={{ className: "text-editorial! underline underline-offset-8 decoration-2" }}
               >
                 {n.label}
               </Link>
             ))}
-            <Button variant="quiet" size="sm" onClick={signOut} className="ml-2 uppercase tracking-[0.14em] text-[0.72rem]">
+            <Button variant="quiet" size="sm" onClick={signOut} className="ml-1 px-2 uppercase tracking-[0.1em] text-[0.68rem] lg:ml-2 lg:px-3 lg:tracking-[0.14em] lg:text-[0.72rem]">
               Sign out
             </Button>
           </div>

@@ -81,16 +81,17 @@ function PaperPage() {
     setPdfBusy(true);
     try {
       const urls = stories
-        .slice(0, 8)
+        .slice(0, 16)
         .map((s) => s.article.image_url)
         .filter((u): u is string => !!u && /^https?:\/\//.test(u));
-      let images = {};
+      let images: Record<string, { dataUrl: string; format: "JPEG" | "PNG" }> = {};
       try {
         images = await getImages({ data: { urls } });
       } catch {
         images = {};
       }
-      const { buildEditionPdf } = await import("@/lib/pdf");
+      const { buildEditionPdf, normaliseImages } = await import("@/lib/pdf");
+      images = await normaliseImages(images);
       const blob = await buildEditionPdf({
         date,
         editionNumber: edition.data.edition.edition_number,
@@ -169,10 +170,10 @@ function PaperPage() {
             </Button>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {isToday && (
             <Button variant="quiet" size="sm" onClick={() => build.mutate(true)} disabled={build.isPending}>
-              <RefreshCw /> Reprint with latest news
+              <RefreshCw /> Reprint<span className="hidden min-[400px]:inline"> with latest news</span>
             </Button>
           )}
           <Button variant="paper" size="sm" onClick={downloadPdf} disabled={pdfBusy}>

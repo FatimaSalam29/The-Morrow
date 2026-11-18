@@ -6,7 +6,14 @@
 - [x] Daily edition generation + newspaper reading page
 - [x] PDF download of the edition
 - [x] Dashboard, archive, explore, saved, settings
-- [ ] Rename to "The Morrow" everywhere; remove Lovable mentions from site
-- [ ] Landing page at /
-- [ ] README + .env.example
-- [ ] End-to-end test: sign up → onboarding → paper → PDF → interactions; mobile/tablet layout
+- [x] Rename to "The Morrow" everywhere; remove Lovable mentions from site
+- [x] Landing page at /
+- [x] README + .env.example
+- [ ] Fix phone layout: today's paper + Explore; check all pages phone/tablet/desktop
+- [ ] Run all tests, add missing tests
+- [ ] Production build passes
+- [ ] Inspect generated PDF (A4, 3 columns, images, links) and fix
+- [ ] Full journey retest
+- [ ] Delete QA account qa.reader@morrow-qa.test and its data
+- [ ] README final review (structure, build, deploy)
+- [ ] GitHub: commit everything (platform pushes); report repo URL / visibility

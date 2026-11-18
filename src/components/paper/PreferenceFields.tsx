@@ -15,11 +15,11 @@ export function TopicPicker({ value, onChange }: { value: string[]; onChange: (v
             aria-pressed={on}
             onClick={() => onChange(on ? value.filter((v) => v !== t.id) : [...value, t.id])}
             className={cn(
-              "group relative border p-4 text-left transition-all",
+              "group relative min-w-0 break-words border p-3 text-left transition-all sm:p-4",
               on ? "border-ink bg-ink text-paper" : "border-rule bg-card hover:border-ink",
             )}
           >
-            <span className="headline block text-lg">{t.label}</span>
+            <span className="headline block pr-5 text-base hyphens-auto sm:text-lg">{t.label}</span>
             <span className={cn("mt-1 block text-xs", on ? "text-paper/70" : "text-muted-foreground")}>
               {t.blurb}
             </span>
@@ -58,9 +58,9 @@ export function KeywordInput({ value, onChange }: { value: string[]; onChange: (
           onChange={(e) => setDraft(e.target.value)}
           maxLength={40}
           placeholder="Type a subject, person or place…"
-          className="h-11 flex-1 border-b-2 border-ink bg-transparent px-1 font-serif text-lg outline-none placeholder:text-muted-foreground/70"
+          className="h-11 min-w-0 flex-1 border-b-2 border-ink bg-transparent px-1 font-serif text-lg outline-none placeholder:text-muted-foreground/70"
         />
-        <button type="submit" className="flex h-11 items-center gap-1 px-3 text-sm font-semibold uppercase tracking-wider text-editorial">
+        <button type="submit" className="flex h-11 shrink-0 items-center gap-1 px-3 text-sm font-semibold uppercase tracking-wider text-editorial">
           <Plus className="size-4" /> Add
         </button>
       </form>
